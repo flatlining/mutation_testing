@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+  <title>Mutation Analysis:</title>
+
+  <link rel="stylesheet" href="dist/reset.css" />
+  <link rel="stylesheet" href="dist/reveal.css" />
+  <link rel="stylesheet" href="dist/theme/black.css" />
+
+  <!-- Theme used for syntax highlighted code -->
+  <link rel="stylesheet" href="plugin/highlight/monokai.css" />
+</head>
+
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <section>
+        <img data-src="images/Virus_green.svg" alt="https://commons.wikimedia.org/wiki/File:Virus_green.svg" />
+        <h1>Mutation Testing</h1>
+        <p><small>And how to write better tests</small></p>
+      </section>
+
+      <section>
+        <section data-background-image="images/dogs.webp" data-background-opacity="0.33">
+          <h3>🇧🇷 Matias Schertel</h3>
+          <dl>
+            <dt>Dev...</dt>
+            <dd>and whatever comes with the title</dd>
+            <dt>Me...</dt>
+            <dd>travel, games, tv shows, home lab, learning new things 🤔, two rescue dogs 🐶🐕, vegan</dd>
+          </dl>
+        </section>
+
+        <section>
+          <h3>Agenda</h3>
+          <ol>
+            <li>Test coverage <small>🔥</small></li>
+            <li>Demo <small>👿</small></li>
+            <li>Mutation testing <small>🧬</small></li>
+            <li>Demo <small>😈</small></li>
+            <li>Development process <small>🦾</small></li>
+            <li><strong>Q</strong>s... and hopefully some <strong>A</strong>s <small>🙋‍♀️</small></li>
+          </ol>
+
+          <aside class="notes">Shhh, these are your private notes 📝</aside>
+        </section>
+      </section>
+
+      <section>
+        <section data-auto-animate>
+          <h2>Test coverage</h2>
+          <h3>the dreadful metric 🔥</h3>
+        </section>
+        <section data-auto-animate>
+          <h2>Test coverage</h2>
+          <h3>the dreadful metric 🔥</h3>
+          <h4>(by itself ❗)</h4>
+        </section>
+
+        <section>
+          <h1>❓</h1>
+          <quote>Who here uses test coverage % in any way?</quote>
+        </section>
+
+        <section>
+          <h1>❓</h1>
+          <quote>Who here works with a pipeline that blocks deploys with test coverage under some %?</quote>
+        </section>
+
+        <section>
+          <h3>The 'usual' dev process</h3>
+          <div class="mermaid">
+            <pre>
+              %%{init: {'theme': 'dark', 'themeVariables': { 'darkMode': true }}}%%
+              graph LR
+                S((Start)) -->  T[Write tests]
+                T --> D[Write code]
+                D --> R[Run tests]
+                R --> C(Test coverage over %?)
+                C -. No .-> T
+                T -.-> R
+                C -- Yes --> E((End))
+            </pre>
+          </div>
+        </section>
+
+        <section data-auto-animate>
+          <h3>Test Coverage</h3>
+          <p>
+            <quote>
+              test coverage is a percentage measure of the degree to which the source code of a program is executed when a particular test suite is run.
+              <span data-id="program">A program with high test coverage</span> has more of its source code executed during testing, which suggests it has a <span data-id="test">lower chance of containing undetected software bugs</span> compared to a program with low test coverage.
+            </quote>
+          </p>
+        </section>
+        <section data-auto-animate>
+          <h3>Test Coverage</h3>
+          <p>
+            <quote>
+              test coverage is a percentage measure of the degree to which the source code of a program is executed when a particular test suite is run.
+              <span data-id="program" style="background: darkorange">A program with high test coverage</span> has more of its source code executed during testing, which suggests it has a <span data-id="test" style="background: darkorange">lower chance of containing undetected software bugs</span> compared to a program with low test coverage.
+            </quote>
+          </p>
+        </section>
+
+        <section>\[\begin{aligned} coverage = bugs^{-1} \end{aligned}\]</section>
+
+        <section data-auto-animate>
+          <ul>
+            <li>100% code executed during test means no bugs?</li>
+            <li>What is the ideal / minimum % for safety?</li>
+            <li data-id="quis" style="font-style: italic">Quis custodiet ipsos custodes?</li>
+          </ul>
+        </section>
+        <section data-auto-animate>
+          <ul>
+            <li>100% code executed during test means no bugs?</li>
+            <li>What is the ideal / minimum % for safety?</li>
+            <li data-id="quis" style="color: darkorange">Who will guard the guards?</li>
+          </ul>
+        </section>
+        <section data-auto-animate>
+          <ul>
+            <li>100% code executed during test means no bugs?</li>
+            <li>What is the ideal / minimum % for safety?</li>
+            <li data-id="quis" style="color: orange">Who will test the tests?</li>
+          </ul>
+        </section>
+      </section>
+
+      <section data-background-image="images/the_good_place.webp" data-background-opacity="0.5">
+        <h2>Demo time!</h2>
+
+        <aside class="notes">
+          https://giphy.com/gifs/thegoodplace-nbc-the-good-place-tgp-MBNz3qtgzFslo0euwU
+        </aside>
+      </section>
+
+      <section>
+        <section>
+          <h2>Mutation Testing</h2>
+          <h3>Testing the tests 🧬</h3>
+        </section>
+
+        <section data-auto-animate>
+          <h3>Mutation Testing</h3>
+          <p>
+            <quote>
+              Mutation testing (or mutation analysis) is used to design new software tests and evaluate the quality of existing software tests.
+              Mutation testing involves <span data-id="modifying">modifying a program in small ways</span>.
+            </quote>
+          </p>
+        </section>
+        <section data-auto-animate>
+          <h3>Mutation Testing</h3>
+          <p>
+            <quote>
+              Mutation testing (or mutation analysis) is used to design new software tests and evaluate the quality of existing software tests.
+              Mutation testing involves <span data-id="modifying" style="color: darkorange">modifying a program in small ways</span>.
+            </quote>
+          </p>
+        </section>
+
+        <section>
+          <h1>😕</h1>
+        </section>
+        <section>
+          <div class="mermaid">
+            <pre>
+              %%{init: {'theme': 'dark', 'themeVariables': { 'darkMode': true }}}%%
+              graph TB
+                START((Start)) -->  T[Write tests]
+                T --> D[Write code]
+                D --> R[Run tests]
+                R --> G(All green?)
+                G --> |No| D
+                G --> |Yes| M[Mutate code]
+                subgraph Mutation Testing
+                  M -.-> MR[Run tests]
+                  MR -.-> MG(All green?)
+                  MG -.-> |Yes| MK[Killed]
+                  MK -.-> M
+                  MG -.-> |No| MS[Survived]
+                  MS -.-> M
+                end
+                M --> END((End))
+            </pre>
+          </div>
+        </section>
+
+        <section>
+          <h3>Goals</h3>
+          <ol>
+            <li>identify weakly tested pieces of code</li>
+            <li>identify weak tests</li>
+            <li>compute the mutation score: \[\begin{aligned} \frac{killed}{total} \end{aligned}\]</li>
+          </ol>
+        </section>
+
+        <section data-auto-animate>
+          <h3>History</h3>
+          <ol data-id="history">
+            <li>1971, proposed by Richard Lipton as a student</li>
+            <li>1978, first developed and published by DeMillo, Lipton and Sayward</li>
+            <li>1980, first implementation of a tool by Timothy Budd (PhD work)</li>
+          </ol>
+        </section>
+        <section data-auto-animate>
+          <h3>History</h3>
+          <h1 data-id="history">🤔</h1>
+        </section>
+      </section>
+
+      <section data-background-image="images/severance.webp" data-background-opacity="0.5">
+        <h2>Demo time!</h2>
+
+        <aside class="notes">
+          https://giphy.com/gifs/AppleTV-apple-tv-app-XjDZoIXRpaJjZY6VFI
+        </aside>
+      </section>
+
+      <section>
+        <section>
+          <h2>Development Process</h2>
+          <h3>How we use it 🦾</h3>
+        </section>
+
+        <section data-background-iframe="https://pitest.org/" data-background-interactive> </section>
+
+        <section data-background-image="images/mutation.webp" data-background-position="top">
+          <aside class="notes">
+            https://github.com/theofidry/awesome-mutation-testing
+          </aside>
+        </section>
+
+        <section>
+          <h3>Proof of concept project</h3>
+          <p>Most active project in the team</p>
+          <p>Input for new develpments </p>
+        </section>
+
+        <section>
+          <h3>Branch based</h3>
+          <img class="r-stretch" src="/images/git_diff.webp" alt="https://commons.wikimedia.org/wiki/File:Git_diff.png">
+          <p>Report generated using the diff between <code>feature</code> and <code>main</code> branch</p>
+        </section>
+
+        <section data-background-color="grey">
+          <h3>Not a show stopper</h3>
+          <div class="r-stack">
+            <img class="fragment" src="/images/sonarqube.webp" alt="https://wiki.eclipse.org/File:Sonarqube.png">
+            <h1 class="fragment r-fit-text" style="opacity: 0.5;">🚫</h1>
+          </div>
+        </section>
+
+        <section>
+          <h3>Reception</h3>
+          <p><strong>I</strong> use it all the time</p>
+          <p>...</p>
+        </section>
+      </section>
+
+      <section data-background-image="images/the_office.webp" data-background-opacity="0.5">
+        <h2>Q&A</h2>
+
+        <aside class="notes">
+          https://giphy.com/gifs/theoffice-the-office-tv-shareholder-meeting-dQbHlZUinO7Lmw7yRl
+        </aside>
+      </section>
+
+      <section>
+        <h3>References</h3>
+
+        <a href="/mutation_testing">/mutation_testing</a>
+      </section>
+
+      <section data-background-image="images/thank_you.webp">
+        <aside class="notes">
+          https://giphy.com/gifs/thank-you-keanu-reeves-QAsBwSjx9zVKoGp9nr
+        </aside>
+      </section>
+
+    </div>
+  </div>
+
+  <script src="dist/reveal.js"></script>
+  <script src="plugin/notes/notes.js"></script>
+  <script src="plugin/markdown/markdown.js"></script>
+  <script src="plugin/highlight/highlight.js"></script>
+  <script src="plugin/math/math.js"></script>
+  <script src="plugin/reveal.js-mermaid-plugin/plugin/mermaid/mermaid.js"></script>
+  <script>
+    // More info about initialization & config:
+    // - https://revealjs.com/initialization/
+    // - https://revealjs.com/config/
+    Reveal.initialize({
+      hash: true,
+
+      // Learn about plugins: https://revealjs.com/plugins/
+      plugins: [RevealMarkdown, RevealHighlight, RevealNotes, RevealMermaid, RevealMath.KaTeX],
+    });
+  </script>
+</body>
+
+</html>
